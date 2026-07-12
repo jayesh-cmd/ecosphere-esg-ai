@@ -3,7 +3,7 @@ import CarbonTransactions from '../components/environmental/CarbonTransactions';
 import SustainabilityGoals from '../components/environmental/SustainabilityGoals';
 import AddCarbonForm from '../components/environmental/AddCarbonForm';
 import Modal from '../components/shared/Modal';
-import { Plus } from 'lucide-react';
+import { Plus, AlertTriangle, X } from 'lucide-react';
 import { useGlobalState } from '../context/GlobalStateContext';
 
 function KpiCard({ label, value, sub, valueColor }) {
@@ -19,11 +19,30 @@ function KpiCard({ label, value, sub, valueColor }) {
 }
 
 export default function EnvironmentalPage() {
-  const { addCarbonEntry } = useGlobalState();
+  const { addCarbonEntry, anomalies, dismissAnomaly } = useGlobalState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
     <div className="space-y-6 relative">
+      {anomalies.length > 0 && (
+        <div className="flex flex-col gap-2">
+          {anomalies.map(anomaly => (
+            <div key={anomaly.id} className="flex items-start gap-3 p-4 rounded-lg" style={{ background: '#fef2f2', border: '1px solid #fecaca' }}>
+              <AlertTriangle size={18} className="mt-0.5 shrink-0" style={{ color: '#dc2626' }} />
+              <div className="flex-1 text-sm font-medium" style={{ color: '#991b1b' }}>
+                ⚠️ Anomaly Detected — {anomaly.message}
+              </div>
+              <button 
+                onClick={() => dismissAnomaly(anomaly.id)}
+                className="shrink-0 hover:opacity-70 transition-opacity"
+              >
+                <X size={16} style={{ color: '#991b1b' }} />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
+
       <div className="flex items-center justify-between mb-4">
         <h2 className="text-lg font-semibold" style={{ color: '#111827' }}>Environmental Impact</h2>
         <button

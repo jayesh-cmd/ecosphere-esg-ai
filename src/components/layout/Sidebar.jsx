@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  BarChart3, Leaf, Users, Shield, Trophy, ChevronRight
+  BarChart3, Leaf, Users, Shield, Trophy, ChevronRight, FileText, Settings
 } from 'lucide-react';
 
 const NAV_ITEMS = [
@@ -9,6 +9,8 @@ const NAV_ITEMS = [
   { id: 'social',        label: 'Social',        icon: Users     },
   { id: 'governance',    label: 'Governance',    icon: Shield    },
   { id: 'gamification',  label: 'Gamification',  icon: Trophy    },
+  { id: 'reports',       label: 'Reports',       icon: FileText  },
+  { id: 'settings',      label: 'Settings',      icon: Settings  },
 ];
 
 export default function Sidebar({ activeTab, onTabChange }) {

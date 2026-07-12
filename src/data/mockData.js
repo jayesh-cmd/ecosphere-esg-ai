@@ -34,13 +34,15 @@ export const departments = [
 // --- Carbon Transactions ---
 export const carbonTransactions = [
   { id: 1, department: 'Engineering',  amount: -120, date: '2026-07-01', source: 'Server Power'        },
-  { id: 2, department: 'Operations',   amount: -340, date: '2026-07-02', source: 'Fleet Vehicles'      },
-  { id: 3, department: 'Marketing',    amount:  +80, date: '2026-07-03', source: 'Carbon Offset Buy'   },
-  { id: 4, department: 'Finance',      amount:  -50, date: '2026-07-04', source: 'Office HVAC'         },
-  { id: 5, department: 'HR',           amount: +150, date: '2026-07-05', source: 'Tree Planting Drive' },
-  { id: 6, department: 'Operations',   amount: -220, date: '2026-07-06', source: 'Air Travel'          },
-  { id: 7, department: 'Engineering',  amount:  +60, date: '2026-07-07', source: 'Solar Panel Output'  },
-  { id: 8, department: 'Legal',        amount:  -30, date: '2026-07-08', source: 'Office Equipment'    },
+  { id: 2, department: 'Operations',   amount: -100, date: '2026-06-25', source: 'Fleet Vehicles'      },
+  { id: 3, department: 'Operations',   amount: -110, date: '2026-06-28', source: 'Fleet Vehicles'      },
+  { id: 4, department: 'Operations',   amount: -105, date: '2026-07-02', source: 'Fleet Vehicles'      },
+  { id: 5, department: 'Operations',   amount: -450, date: '2026-07-10', source: 'Fleet Vehicles'      }, // Anomaly spike!
+  { id: 6, department: 'Marketing',    amount:  +80, date: '2026-07-03', source: 'Carbon Offset Buy'   },
+  { id: 7, department: 'Finance',      amount:  -50, date: '2026-07-04', source: 'Office HVAC'         },
+  { id: 8, department: 'HR',           amount: +150, date: '2026-07-05', source: 'Tree Planting Drive' },
+  { id: 9, department: 'Engineering',  amount:  +60, date: '2026-07-07', source: 'Solar Panel Output'  },
+  { id: 10, department: 'Legal',       amount:  -30, date: '2026-07-08', source: 'Office Equipment'    },
 ];
 
 // --- Sustainability Goals ---

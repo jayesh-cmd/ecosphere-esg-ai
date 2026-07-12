@@ -4,7 +4,9 @@ import { generateSummary, answerQuestion } from '../../utils/generateSummary';
 import { useGlobalState } from '../../context/GlobalStateContext';
 
 export default function AISummaryCard() {
-  const { esgScores } = useGlobalState();
+  const globalState = useGlobalState();
+  const { esgScores } = globalState;
+  
   const [messages, setMessages] = useState([
     {
       role: 'assistant',
@@ -25,21 +27,18 @@ export default function AISummaryCard() {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
   }, [messages]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const q = input.trim();
+  const handleSubmit = async (e) => {
+    if (e?.preventDefault) e.preventDefault();
+    const q = (typeof e === 'string' ? e : input).trim();
     if (!q || loading) return;
 
     setMessages(prev => [...prev, { role: 'user', text: q }]);
     setInput('');
     setLoading(true);
 
-    // Simulate a short API delay
-    setTimeout(() => {
-      const answer = answerQuestion(q, esgScores);
-      setMessages(prev => [...prev, { role: 'assistant', text: answer }]);
-      setLoading(false);
-    }, 700);
+    const answer = await answerQuestion(q, globalState);
+    setMessages(prev => [...prev, { role: 'assistant', text: answer }]);
+    setLoading(false);
   };
 
   const SUGGESTIONS = [
@@ -63,7 +62,7 @@ export default function AISummaryCard() {
           className="text-xs px-2 py-0.5 rounded-full font-medium"
           style={{ background: '#f0fdf4', color: '#15803d', border: '1px solid #bbf7d0' }}
         >
-          GPT-4o (mock)
+          Claude 3 Haiku
         </span>
       </div>
 
@@ -123,7 +122,7 @@ export default function AISummaryCard() {
           {SUGGESTIONS.map(s => (
             <button
               key={s}
-              onClick={() => setInput(s)}
+              onClick={() => handleSubmit(s)}
               className="text-xs px-2.5 py-1 rounded-full"
               style={{
                 background: '#f9fafb',

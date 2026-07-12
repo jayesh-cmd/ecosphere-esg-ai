@@ -17,6 +17,48 @@ export function GlobalStateProvider({ children }) {
   const [rewards, setRewards] = useState(mockData.rewards);
   const [scoreTrend, setScoreTrend] = useState(mockData.scoreTrend);
 
+  const [dismissedAnomalies, setDismissedAnomalies] = useState(new Set());
+
+  const anomalies = useMemo(() => {
+    const emissionsByDept = {};
+    carbonTransactions.forEach(t => {
+      if (t.amount < 0) {
+        if (!emissionsByDept[t.department]) emissionsByDept[t.department] = [];
+        emissionsByDept[t.department].push(t);
+      }
+    });
+
+    const detected = [];
+    const activeGoal = sustainabilityGoals.some(g => g.progress < 100 && g.title.toLowerCase().includes('reduce'));
+
+    for (const [dept, entries] of Object.entries(emissionsByDept)) {
+      if (entries.length < 3) continue;
+      
+      const sorted = entries.sort((a, b) => new Date(a.date) - new Date(b.date));
+      const latest = sorted[sorted.length - 1];
+      const previous = sorted.slice(0, sorted.length - 1);
+      
+      const sum = previous.reduce((acc, curr) => acc + Math.abs(curr.amount), 0);
+      const avg = sum / previous.length;
+      const latestVal = Math.abs(latest.amount);
+
+      if (latestVal > avg * 1.5) {
+        const pct = Math.round(((latestVal - avg) / avg) * 100);
+        detected.push({
+          id: `${dept}-spike-${latest.id}`,
+          department: dept,
+          message: `${dept} emissions spiked ${pct}% this period${activeGoal ? ' despite active reduction goals' : ''}.`
+        });
+      }
+    }
+
+    return detected.filter(a => !dismissedAnomalies.has(a.id));
+  }, [carbonTransactions, sustainabilityGoals, dismissedAnomalies]);
+
+  const dismissAnomaly = (id) => {
+    setDismissedAnomalies(prev => new Set(prev).add(id));
+  };
+
   // Derived overall scores based on department averages
   const esgScores = useMemo(() => {
     if (!departments.length) return { environmental: 0, social: 0, governance: 0, overall: 0 };
@@ -75,8 +117,8 @@ export function GlobalStateProvider({ children }) {
     <GlobalStateContext.Provider value={{
       esgScores, scoreTrend, departments, carbonTransactions, sustainabilityGoals,
       csrActivities, employeeParticipation, complianceIssues, policies,
-      leaderboard, activeChallenges, badges, rewards,
-      addCarbonEntry, addParticipation, addIssue
+      leaderboard, activeChallenges, badges, rewards, anomalies,
+      addCarbonEntry, addParticipation, addIssue, dismissAnomaly
     }}>
       {children}
     </GlobalStateContext.Provider>

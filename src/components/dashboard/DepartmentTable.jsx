@@ -1,5 +1,6 @@
 import React from 'react';
 import { useGlobalState } from '../../context/GlobalStateContext';
+import { AlertTriangle } from 'lucide-react';
 
 function ScoreCell({ value }) {
   const color =
@@ -9,7 +10,7 @@ function ScoreCell({ value }) {
 }
 
 export default function DepartmentTable() {
-  const { departments } = useGlobalState();
+  const { departments, anomalies } = useGlobalState();
   const sorted = [...departments].sort((a, b) => b.total - a.total);
 
   return (
@@ -42,41 +43,47 @@ export default function DepartmentTable() {
             </tr>
           </thead>
           <tbody>
-            {sorted.map((dept, idx) => (
-              <tr
-                key={dept.id}
-                className="tr-hover"
-                style={{ borderBottom: idx < sorted.length - 1 ? '1px solid #f9fafb' : 'none' }}
-              >
-                <td className="px-6 py-3">
-                  <div
-                    style={{
-                      display: 'inline-flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      width: 24,
-                      height: 24,
-                      borderRadius: 4,
-                      fontSize: 12,
-                      fontWeight: 600,
-                      background: idx === 0 ? '#fefce8' : idx === 1 ? '#f9fafb' : idx === 2 ? '#fff7ed' : 'transparent',
-                      color: idx === 0 ? '#854d0e' : idx === 1 ? '#4b5563' : idx === 2 ? '#9a3412' : '#9ca3af',
-                    }}
-                  >
-                    {idx + 1}
-                  </div>
-                </td>
-                <td className="px-6 py-3 font-medium text-sm" style={{ color: '#111827' }}>
-                  {dept.name}
-                </td>
-                <td className="px-4 py-3 text-center"><ScoreCell value={dept.environmental} /></td>
-                <td className="px-4 py-3 text-center"><ScoreCell value={dept.social} /></td>
-                <td className="px-4 py-3 text-center"><ScoreCell value={dept.governance} /></td>
-                <td className="px-4 py-3 text-center">
-                  <span className="font-semibold text-sm" style={{ color: '#111827' }}>{dept.total}</span>
-                </td>
-              </tr>
-            ))}
+            {sorted.map((dept, idx) => {
+              const hasAnomaly = anomalies.some(a => a.department === dept.name);
+              return (
+                <tr
+                  key={dept.id}
+                  className="tr-hover"
+                  style={{ borderBottom: idx < sorted.length - 1 ? '1px solid #f9fafb' : 'none' }}
+                >
+                  <td className="px-6 py-3">
+                    <div
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        width: 24,
+                        height: 24,
+                        borderRadius: 4,
+                        fontSize: 12,
+                        fontWeight: 600,
+                        background: idx === 0 ? '#fefce8' : idx === 1 ? '#f9fafb' : idx === 2 ? '#fff7ed' : 'transparent',
+                        color: idx === 0 ? '#854d0e' : idx === 1 ? '#4b5563' : idx === 2 ? '#9a3412' : '#9ca3af',
+                      }}
+                    >
+                      {idx + 1}
+                    </div>
+                  </td>
+                  <td className="px-6 py-3 font-medium text-sm" style={{ color: '#111827' }}>
+                    <div className="flex items-center gap-2">
+                      {dept.name}
+                      {hasAnomaly && <AlertTriangle size={14} style={{ color: '#dc2626' }} title="Anomaly Detected" />}
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-center"><ScoreCell value={dept.environmental} /></td>
+                  <td className="px-4 py-3 text-center"><ScoreCell value={dept.social} /></td>
+                  <td className="px-4 py-3 text-center"><ScoreCell value={dept.governance} /></td>
+                  <td className="px-4 py-3 text-center">
+                    <span className="font-semibold text-sm" style={{ color: '#111827' }}>{dept.total}</span>
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

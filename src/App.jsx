@@ -6,6 +6,8 @@ import EnvironmentalPage from './pages/EnvironmentalPage';
 import SocialPage from './pages/SocialPage';
 import GovernancePage from './pages/GovernancePage';
 import GamificationPage from './pages/GamificationPage';
+import ReportsPage from './pages/ReportsPage';
+import SettingsPage from './pages/SettingsPage';
 import { useGlobalState } from './context/GlobalStateContext';
 
 const PAGES = {
@@ -14,6 +16,8 @@ const PAGES = {
   social:        SocialPage,
   governance:    GovernancePage,
   gamification:  GamificationPage,
+  reports:       ReportsPage,
+  settings:      SettingsPage,
 };
 
 export default function App() {
