@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+:root {
+  font-family: 'Inter', sans-serif;
+  --color-bg:      #f9fafb;
+  --color-surface: #ffffff;
+  --color-border:  #e5e7eb;
+  --color-text:    #111827;
+  --color-muted:   #6b7280;
+  --color-faint:   #9ca3af;
+  --color-accent:  #16a34a;
+  --color-accent-lt: #f0fdf4;
+  --color-accent-t: #15803d;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Minimal scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
+
+/* Subtle transition on interactive elements only */
+button, a, input, select, textarea {
+  transition: background-color 120ms ease, border-color 120ms ease, color 120ms ease, box-shadow 120ms ease;
+}
+
+/* Card — flat, white, 1px border */
+.card {
+  background-color: #ffffff;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+}
+
+/* Row hover — barely-there tint */
+.tr-hover:hover {
+  background-color: #f9fafb;
+}
+
+/* Card hover — lift 1px, deepen border only */
+.card-hover {
+  transition: box-shadow 150ms ease, border-color 150ms ease;
+}
+.card-hover:hover {
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border-color: #d1d5db;
+}
+
+/* Live dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.35; }
+}
+.pulse-dot { animation: pulse-dot 2.5s ease-in-out infinite; }
+
+/* Progress bar shimmer-in */
+@keyframes bar-in {
+  from { width: 0; }
+}
+.bar-animate { animation: bar-in 0.6s ease forwards; }
