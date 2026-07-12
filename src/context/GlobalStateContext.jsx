@@ -89,8 +89,8 @@ export function GlobalStateProvider({ children }) {
 
   const addCarbonEntry = (entry) => {
     setCarbonTransactions(prev => [...prev, entry]);
-    // +/- 4 ensures that (4 / 7 departments) > 0.5, guaranteeing a visible +1 or -1 change in the overall average score
-    const delta = entry.amount > 0 ? 4 : -4;
+    // +/- 12 ensures that the average across 7 departments changes by > 1.5, guaranteeing a visible change in the top-level metric
+    const delta = entry.amount > 0 ? 12 : -12;
     updateDepartmentScore(entry.department, 'environmental', delta);
   };
 

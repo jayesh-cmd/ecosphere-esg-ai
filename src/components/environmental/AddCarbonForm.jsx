@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
-const DEPARTMENTS = ['Engineering', 'Operations', 'Marketing', 'Finance', 'HR', 'Legal', 'Product'];
 const SOURCES = ['Server Power', 'Fleet Vehicles', 'Carbon Offset Buy', 'Office HVAC', 'Tree Planting', 'Air Travel', 'Solar Panel Output', 'Office Equipment', 'Other'];
 
 const inputStyle = {
@@ -17,6 +17,9 @@ const inputStyle = {
 const labelStyle = { display: 'block', fontSize: 12, fontWeight: 500, color: '#6b7280', marginBottom: 6 };
 
 export default function AddCarbonForm({ onSubmit }) {
+  const { departments } = useGlobalState();
+  const DEPARTMENTS = departments.map(d => d.name);
+
   const [form, setForm] = useState({
     department: '', source: '', amount: '', type: 'debit',
     date: new Date().toISOString().slice(0, 10),
