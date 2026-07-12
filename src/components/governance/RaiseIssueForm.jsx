@@ -30,12 +30,7 @@ export default function RaiseIssueForm({ onSubmit }) {
   };
 
   return (
-    <div className="card p-5">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold" style={{ color: '#111827' }}>Raise Issue</h3>
-        <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>Log a new compliance issue</p>
-      </div>
-
+    <div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label style={labelStyle}>Description</label>

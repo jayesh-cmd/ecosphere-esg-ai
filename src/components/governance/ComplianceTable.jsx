@@ -50,7 +50,11 @@ export default function ComplianceTable({ extraRows = [] }) {
                 <tr
                   key={issue.id}
                   className="tr-hover"
-                  style={{ borderBottom: i < data.length - 1 ? '1px solid #f9fafb' : 'none' }}
+                  style={{ 
+                    borderBottom: i < data.length - 1 ? '1px solid #f9fafb' : 'none',
+                    borderLeft: isOverdue ? '3px solid #ef4444' : '3px solid transparent',
+                    background: isOverdue ? '#fef2f2' : 'transparent'
+                  }}
                 >
                   <td className="px-6 py-3" style={{ maxWidth: 280 }}>
                     <p

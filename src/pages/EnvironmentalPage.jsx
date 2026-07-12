@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import CarbonTransactions from '../components/environmental/CarbonTransactions';
 import SustainabilityGoals from '../components/environmental/SustainabilityGoals';
 import AddCarbonForm from '../components/environmental/AddCarbonForm';
+import Modal from '../components/shared/Modal';
+import { Plus } from 'lucide-react';
 
 function KpiCard({ label, value, sub, valueColor }) {
   return (
@@ -17,9 +19,22 @@ function KpiCard({ label, value, sub, valueColor }) {
 
 export default function EnvironmentalPage() {
   const [extraRows, setExtraRows] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold" style={{ color: '#111827' }}>Environmental Impact</h2>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+          style={{ background: '#111827', color: '#ffffff' }}
+        >
+          <Plus size={16} strokeWidth={2} />
+          Add Carbon Entry
+        </button>
+      </div>
+
       <div className="grid grid-cols-3 gap-4">
         <KpiCard label="Total offsets"      value="+290 kg CO₂" sub="Credited this month"    valueColor="#16a34a" />
         <KpiCard label="Total emissions"    value="−760 kg CO₂" sub="Emitted this month"     valueColor="#dc2626" />
@@ -27,14 +42,24 @@ export default function EnvironmentalPage() {
       </div>
 
       <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-6">
+        <div className="col-span-2">
           <CarbonTransactions extraRows={extraRows} />
         </div>
-        <div className="space-y-6">
-          <AddCarbonForm onSubmit={e => setExtraRows(p => [...p, e])} />
+        <div>
           <SustainabilityGoals />
         </div>
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        title="Log Carbon Entry"
+      >
+        <AddCarbonForm onSubmit={e => {
+          setExtraRows(p => [...p, e]);
+          setTimeout(() => setIsModalOpen(false), 800);
+        }} />
+      </Modal>
     </div>
   );
 }

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ComplianceTable from '../components/governance/ComplianceTable';
 import PoliciesList from '../components/governance/PoliciesList';
 import RaiseIssueForm from '../components/governance/RaiseIssueForm';
+import Modal from '../components/shared/Modal';
+import { Plus } from 'lucide-react';
 
 function KpiCard({ label, value, sub, valueColor }) {
   return (
@@ -17,9 +19,22 @@ function KpiCard({ label, value, sub, valueColor }) {
 
 export default function GovernancePage() {
   const [extraIssues, setExtraIssues] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 relative">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold" style={{ color: '#111827' }}>Governance</h2>
+        <button
+          onClick={() => setIsModalOpen(true)}
+          className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-semibold transition-colors"
+          style={{ background: '#111827', color: '#ffffff' }}
+        >
+          <Plus size={16} strokeWidth={2} />
+          Raise Issue
+        </button>
+      </div>
+
       <div className="grid grid-cols-4 gap-4">
         <KpiCard label="Governance score"     value="72/100" sub="Below target of 80"        valueColor="#d97706" />
         <KpiCard label="Overdue issues"       value="2"      sub="Critical & High severity"   valueColor="#dc2626" />
@@ -28,14 +43,24 @@ export default function GovernancePage() {
       </div>
 
       <div className="grid grid-cols-3 gap-6">
-        <div className="col-span-2 space-y-6">
+        <div className="col-span-2">
           <ComplianceTable extraRows={extraIssues} />
-          <PoliciesList />
         </div>
         <div>
-          <RaiseIssueForm onSubmit={e => setExtraIssues(p => [...p, e])} />
+          <PoliciesList />
         </div>
       </div>
+
+      <Modal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)}
+        title="Raise Issue"
+      >
+        <RaiseIssueForm onSubmit={e => {
+          setExtraIssues(p => [...p, e]);
+          setTimeout(() => setIsModalOpen(false), 800);
+        }} />
+      </Modal>
     </div>
   );
 }

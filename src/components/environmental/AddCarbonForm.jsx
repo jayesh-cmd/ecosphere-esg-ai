@@ -41,12 +41,7 @@ export default function AddCarbonForm({ onSubmit }) {
   };
 
   return (
-    <div className="card p-5">
-      <div className="mb-5">
-        <h3 className="text-sm font-semibold" style={{ color: '#111827' }}>Log Carbon Entry</h3>
-        <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>Add a new emissions or offset record</p>
-      </div>
-
+    <div>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
           <label style={labelStyle}>Department</label>
