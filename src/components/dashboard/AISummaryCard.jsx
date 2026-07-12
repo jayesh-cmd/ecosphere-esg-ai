@@ -58,6 +58,9 @@ export default function AISummaryCard() {
           <h3 className="text-sm font-semibold" style={{ color: '#111827' }}>AI ESG Assistant</h3>
           <p className="text-xs mt-0.5" style={{ color: '#9ca3af' }}>Ask anything about your ESG performance</p>
         </div>
+        <span
+          className="text-xs px-2 py-0.5 rounded-full font-medium"
+          style={{ background: '#f0fdf4', color: '#15803d', border: '1px solid #bbf7d0' }}
         >
           Claude Sonnet
         </span>
