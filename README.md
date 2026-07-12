@@ -44,10 +44,10 @@ Claude-powered AI ESG Assistant that answers natural language questions about li
 *(Make sure to save the screenshots you provided into a `screenshots` folder in your repository to display them here!)*
 
 ### Dashboard & AI Assistant
-![Dashboard Overview](./screenshots/1.png)
+![Dashboard Overview](./screenshots/1.png?v=2)
 
 ### Environmental Tracking & Anomaly Detection
-![Environmental Tab](./screenshots/2.png)
+![Environmental Tab](./screenshots/2.png?v=2)
 
 ### Department Rankings & Score Trends
-![Department Rankings](./screenshots/3.png)
+![Department Rankings](./screenshots/3.png?v=2)
