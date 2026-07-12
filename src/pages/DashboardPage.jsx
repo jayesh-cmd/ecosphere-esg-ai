@@ -1,5 +1,5 @@
 import React from 'react';
-import { esgScores } from '../data/mockData';
+import { useGlobalState } from '../context/GlobalStateContext';
 import ScoreCard from '../components/shared/ScoreCard';
 import ScoreTrendChart from '../components/dashboard/ScoreTrendChart';
 import DepartmentTable from '../components/dashboard/DepartmentTable';
@@ -14,6 +14,7 @@ const CARDS = [
 ];
 
 export default function DashboardPage() {
+  const { esgScores } = useGlobalState();
   return (
     <div className="space-y-6">
       {/* Score cards */}

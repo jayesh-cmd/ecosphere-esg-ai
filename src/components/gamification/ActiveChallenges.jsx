@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { activeChallenges as initialChallenges } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import StatusPill from '../shared/StatusPill';
 
 const DIFF_STYLE = {
@@ -9,6 +9,7 @@ const DIFF_STYLE = {
 };
 
 export default function ActiveChallenges() {
+  const { activeChallenges: initialChallenges } = useGlobalState();
   const [challenges, setChallenges] = useState(initialChallenges);
 
   const toggleJoin = id => {

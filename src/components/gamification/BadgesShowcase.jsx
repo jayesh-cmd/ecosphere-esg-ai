@@ -1,7 +1,8 @@
 import React from 'react';
-import { badges } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 export default function BadgesShowcase() {
+  const { badges } = useGlobalState();
   const unlocked = badges.filter(b => b.unlocked).length;
 
   return (

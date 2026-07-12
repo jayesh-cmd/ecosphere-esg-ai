@@ -4,6 +4,7 @@ import PoliciesList from '../components/governance/PoliciesList';
 import RaiseIssueForm from '../components/governance/RaiseIssueForm';
 import Modal from '../components/shared/Modal';
 import { Plus } from 'lucide-react';
+import { useGlobalState } from '../context/GlobalStateContext';
 
 function KpiCard({ label, value, sub, valueColor }) {
   return (
@@ -18,7 +19,7 @@ function KpiCard({ label, value, sub, valueColor }) {
 }
 
 export default function GovernancePage() {
-  const [extraIssues, setExtraIssues] = useState([]);
+  const { esgScores, addIssue } = useGlobalState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -36,7 +37,7 @@ export default function GovernancePage() {
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        <KpiCard label="Governance score"     value="72/100" sub="Below target of 80"        valueColor="#d97706" />
+        <KpiCard label="Governance score"     value={`${esgScores.governance}/100`} sub="Target: 80"        valueColor={esgScores.governance >= 80 ? '#16a34a' : '#d97706'} />
         <KpiCard label="Overdue issues"       value="2"      sub="Critical & High severity"   valueColor="#dc2626" />
         <KpiCard label="Policies tracked"     value="6"      sub="Avg 84% acknowledgement"   />
         <KpiCard label="Resolved this month"  value="8"      sub="Issues closed"              valueColor="#16a34a" />
@@ -44,7 +45,7 @@ export default function GovernancePage() {
 
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2">
-          <ComplianceTable extraRows={extraIssues} />
+          <ComplianceTable />
         </div>
         <div>
           <PoliciesList />
@@ -57,7 +58,7 @@ export default function GovernancePage() {
         title="Raise Issue"
       >
         <RaiseIssueForm onSubmit={e => {
-          setExtraIssues(p => [...p, e]);
+          addIssue(e);
           setTimeout(() => setIsModalOpen(false), 800);
         }} />
       </Modal>

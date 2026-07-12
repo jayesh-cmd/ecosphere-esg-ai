@@ -1,9 +1,10 @@
 import React from 'react';
-import { employeeParticipation } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import StatusPill from '../shared/StatusPill';
 
-export default function EmployeeParticipation({ extraRows = [] }) {
-  const data = [...employeeParticipation, ...extraRows];
+export default function EmployeeParticipation() {
+  const { employeeParticipation } = useGlobalState();
+  const data = [...employeeParticipation].reverse();
 
   return (
     <div className="card">

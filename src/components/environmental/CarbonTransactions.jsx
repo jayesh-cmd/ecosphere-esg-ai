@@ -1,9 +1,10 @@
 import React from 'react';
-import { carbonTransactions as initialData } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import { ArrowUpRight, ArrowDownRight } from 'lucide-react';
 
-export default function CarbonTransactions({ extraRows = [] }) {
-  const data = [...initialData, ...extraRows];
+export default function CarbonTransactions() {
+  const { carbonTransactions } = useGlobalState();
+  const data = [...carbonTransactions].sort((a, b) => new Date(b.date) - new Date(a.date));
 
   return (
     <div className="card">

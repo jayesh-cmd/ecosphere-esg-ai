@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, Loader } from 'lucide-react';
 import { generateSummary, answerQuestion } from '../../utils/generateSummary';
-import { esgScores } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 export default function AISummaryCard() {
+  const { esgScores } = useGlobalState();
   const [messages, setMessages] = useState([
     {
       role: 'assistant',

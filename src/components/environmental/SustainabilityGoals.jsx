@@ -1,8 +1,9 @@
 import React from 'react';
-import { sustainabilityGoals } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import ProgressBar from '../shared/ProgressBar';
 
 export default function SustainabilityGoals() {
+  const { sustainabilityGoals } = useGlobalState();
   return (
     <div className="card p-6">
       <div className="mb-5">

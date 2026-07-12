@@ -1,9 +1,10 @@
 import React from 'react';
-import { leaderboard } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 const RANK_MEDAL = { 1: '🥇', 2: '🥈', 3: '🥉' };
 
 export default function Leaderboard() {
+  const { leaderboard } = useGlobalState();
   return (
     <div className="card">
       <div className="px-6 py-4" style={{ borderBottom: '1px solid #f3f4f6' }}>

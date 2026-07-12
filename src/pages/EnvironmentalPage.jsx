@@ -4,6 +4,7 @@ import SustainabilityGoals from '../components/environmental/SustainabilityGoals
 import AddCarbonForm from '../components/environmental/AddCarbonForm';
 import Modal from '../components/shared/Modal';
 import { Plus } from 'lucide-react';
+import { useGlobalState } from '../context/GlobalStateContext';
 
 function KpiCard({ label, value, sub, valueColor }) {
   return (
@@ -18,7 +19,7 @@ function KpiCard({ label, value, sub, valueColor }) {
 }
 
 export default function EnvironmentalPage() {
-  const [extraRows, setExtraRows] = useState([]);
+  const { addCarbonEntry } = useGlobalState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -43,7 +44,7 @@ export default function EnvironmentalPage() {
 
       <div className="grid grid-cols-3 gap-6">
         <div className="col-span-2">
-          <CarbonTransactions extraRows={extraRows} />
+          <CarbonTransactions />
         </div>
         <div>
           <SustainabilityGoals />
@@ -56,7 +57,7 @@ export default function EnvironmentalPage() {
         title="Log Carbon Entry"
       >
         <AddCarbonForm onSubmit={e => {
-          setExtraRows(p => [...p, e]);
+          addCarbonEntry(e);
           setTimeout(() => setIsModalOpen(false), 800);
         }} />
       </Modal>

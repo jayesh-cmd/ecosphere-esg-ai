@@ -1,9 +1,10 @@
 import React from 'react';
-import { complianceIssues as initialIssues } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import StatusPill from '../shared/StatusPill';
 
-export default function ComplianceTable({ extraRows = [] }) {
-  const data = [...initialIssues, ...extraRows];
+export default function ComplianceTable() {
+  const { complianceIssues } = useGlobalState();
+  const data = [...complianceIssues].sort((a, b) => new Date(a.dueDate) - new Date(b.dueDate));
   const today = new Date().toISOString().slice(0, 10);
 
   return (

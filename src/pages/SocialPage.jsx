@@ -4,6 +4,7 @@ import EmployeeParticipation from '../components/social/EmployeeParticipation';
 import LogParticipationForm from '../components/social/LogParticipationForm';
 import Modal from '../components/shared/Modal';
 import { Plus } from 'lucide-react';
+import { useGlobalState } from '../context/GlobalStateContext';
 
 function KpiCard({ label, value, sub, valueColor }) {
   return (
@@ -18,7 +19,7 @@ function KpiCard({ label, value, sub, valueColor }) {
 }
 
 export default function SocialPage() {
-  const [extraRows, setExtraRows] = useState([]);
+  const { addParticipation } = useGlobalState();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
@@ -44,7 +45,7 @@ export default function SocialPage() {
 
       <div className="grid grid-cols-2 gap-6">
         <CSRActivities />
-        <EmployeeParticipation extraRows={extraRows} />
+        <EmployeeParticipation />
       </div>
 
       <Modal 
@@ -53,7 +54,7 @@ export default function SocialPage() {
         title="Log Participation"
       >
         <LogParticipationForm onSubmit={e => {
-          setExtraRows(p => [...p, e]);
+          addParticipation(e);
           setTimeout(() => setIsModalOpen(false), 800);
         }} />
       </Modal>

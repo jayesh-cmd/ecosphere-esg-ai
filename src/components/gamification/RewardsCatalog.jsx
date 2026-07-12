@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
-import { rewards } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 const userXP = 4850;
 
 export default function RewardsCatalog() {
+  const { rewards: initialRewards } = useGlobalState();
+  const [rewards, setRewards] = useState(initialRewards);
   const [redeemed, setRedeemed] = useState(new Set());
 
   const handleRedeem = id => setRedeemed(prev => new Set(prev).add(id));

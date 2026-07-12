@@ -1,5 +1,5 @@
 import React from 'react';
-import { csrActivities } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 import StatusPill from '../shared/StatusPill';
 
 const CATEGORY_DOT = {
@@ -11,6 +11,7 @@ const CATEGORY_DOT = {
 };
 
 export default function CSRActivities() {
+  const { csrActivities } = useGlobalState();
   return (
     <div className="card">
       <div className="px-6 py-4" style={{ borderBottom: '1px solid #f3f4f6' }}>

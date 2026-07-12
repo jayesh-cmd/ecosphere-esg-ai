@@ -1,9 +1,8 @@
-import React from 'react';
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer
 } from 'recharts';
-import { scoreTrend } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 // Each entry: color must exactly match the Line's stroke; dashed must match strokeDasharray
 const SERIES = [
@@ -73,6 +72,7 @@ const CustomTooltip = ({ active, payload, label }) => {
 };
 
 export default function ScoreTrendChart() {
+  const { scoreTrend } = useGlobalState();
   return (
     <div className="card p-6">
       <div className="flex items-center justify-between mb-2">

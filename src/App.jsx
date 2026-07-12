@@ -6,7 +6,7 @@ import EnvironmentalPage from './pages/EnvironmentalPage';
 import SocialPage from './pages/SocialPage';
 import GovernancePage from './pages/GovernancePage';
 import GamificationPage from './pages/GamificationPage';
-import { esgScores } from './data/mockData';
+import { useGlobalState } from './context/GlobalStateContext';
 
 const PAGES = {
   dashboard:     DashboardPage,
@@ -18,6 +18,7 @@ const PAGES = {
 
 export default function App() {
   const [activeTab, setActiveTab] = useState('dashboard');
+  const { esgScores } = useGlobalState();
   const Page = PAGES[activeTab] || DashboardPage;
 
   return (
@@ -25,7 +26,7 @@ export default function App() {
       <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
-        <Header activeTab={activeTab} overallScore={esgScores.overall} />
+        <Header activeTab={activeTab} />
 
         <main className="flex-1 overflow-y-auto p-8">
           <Page />

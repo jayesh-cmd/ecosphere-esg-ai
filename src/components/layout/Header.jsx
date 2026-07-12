@@ -1,5 +1,6 @@
 import React from 'react';
 import { Bell, Search, TrendingUp } from 'lucide-react';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 const PAGE_TITLES = {
   dashboard:     { title: 'Dashboard',         subtitle: 'ESG performance overview'                    },
@@ -9,7 +10,9 @@ const PAGE_TITLES = {
   gamification:  { title: 'Gamification',      subtitle: 'Challenges, leaderboard & rewards'           },
 };
 
-export default function Header({ activeTab, overallScore }) {
+export default function Header({ activeTab }) {
+  const { esgScores } = useGlobalState();
+  const overallScore = esgScores.overall;
   const { title, subtitle } = PAGE_TITLES[activeTab] || PAGE_TITLES.dashboard;
 
   return (

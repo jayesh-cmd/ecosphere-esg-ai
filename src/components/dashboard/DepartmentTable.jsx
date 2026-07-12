@@ -1,5 +1,5 @@
 import React from 'react';
-import { departments } from '../../data/mockData';
+import { useGlobalState } from '../../context/GlobalStateContext';
 
 function ScoreCell({ value }) {
   const color =
@@ -9,6 +9,7 @@ function ScoreCell({ value }) {
 }
 
 export default function DepartmentTable() {
+  const { departments } = useGlobalState();
   const sorted = [...departments].sort((a, b) => b.total - a.total);
 
   return (
